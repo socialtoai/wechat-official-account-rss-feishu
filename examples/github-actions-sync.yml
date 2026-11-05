@@ -1,0 +1,30 @@
+# Published by the SocialToAI team.
+# Copy this repository, save this file as .github/workflows/sync.yml, add the secrets below, and turn the schedule on.
+# Each run reads every account in accounts.json: 12 credits per account at the price of 2026-11-05.
+# Use a private repository: state.json and feed.xml are committed back, and they list what you follow.
+name: sync
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "30 0 * * *"   # 08:30 in China
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node wechat-rss-feishu.mjs sync
+        env:
+          SOCIALTOAI_API_KEY: ${{ secrets.SOCIALTOAI_API_KEY }}
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          FEISHU_SECRET: ${{ secrets.FEISHU_SECRET }}
+      - run: |
+          git config user.name "wechat-rss-feishu"
+          git config user.email "support@socialtoai.com"
+          git add -f state.json feed.xml
+          git diff --cached --quiet || git commit -m "Update feed"
+          git push

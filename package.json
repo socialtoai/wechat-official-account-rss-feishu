@@ -1,0 +1,13 @@
+{
+  "name": "wechat-official-account-rss-feishu",
+  "version": "1.0.0",
+  "description": "Follow WeChat Official Accounts as an RSS feed and Feishu group messages.",
+  "type": "module",
+  "bin": { "wechat-rss-feishu": "./wechat-rss-feishu.mjs" },
+  "scripts": { "test": "node --test test.mjs" },
+  "engines": { "node": ">=18" },
+  "license": "MIT",
+  "author": "SocialToAI team",
+  "homepage": "https://socialtoai.com/zh/",
+  "repository": "github:socialtoai/wechat-official-account-rss-feishu"
+}
