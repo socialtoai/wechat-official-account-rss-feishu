@@ -6,6 +6,26 @@
 
 SocialToAI 团队发布。工具本身开源（MIT），读取走我们的付费 API，每次读取都要花积分，费用写在下面。
 
+## 不想跑脚本：在 Claude、ChatGPT 或 Cursor 里说一句就建好
+
+这个仓库的脚本适合想自己掌控运行的人。只是想“关注的公众号有新文章就进飞书群”，可以不碰命令行：把 SocialToAI 接进你的 AI，说一句话，由我们按时运行。同样不用你的微信账号、不扫码，所以不会牵连你的账号。
+
+1. **接上。** MCP 地址 `https://mcp.socialtoai.com/mcp`。Claude：Customize → Connectors → Add custom connector，名称填 `SocialToAI`，粘贴地址；ChatGPT 网页版：Plugins（插件）→ 加号 → Add custom MCP server，认证选 OAuth；Cursor：在 `~/.cursor/mcp.json` 的 `mcpServers` 里加 `"socialtoai": { "url": "https://mcp.socialtoai.com/mcp" }`。登录时用邮箱验证码登录 SocialToAI，点“允许”，不用复制 Key。
+2. **准备飞书机器人。** 群设置 → 群机器人 → 添加机器人 → 自定义机器人，复制 webhook 地址。不要开签名校验和 IP 白名单；要设关键词就填 `SocialToAI`。
+3. **对 AI 说。** 给一篇这个公众号的文章链接，AI 会自己取出 `gh_` 开头的编号：
+
+> 套餐限制：Claude 免费版可以加一个自定义连接器；ChatGPT 的自定义连接器，OpenAI 帮助中心写的是面向 Business、Enterprise、Edu 和 Pro，其他套餐以你自己的设置页为准。
+
+   ```text
+   这是某公众号的一篇文章：<文章链接>。每天早上 8 点看一次这个公众号，有新文章就发到这个飞书群：<机器人地址>
+   ```
+
+   AI 先告诉你每次和每月最多多少积分、发到哪个群，你同意后群里先收到一条测试消息，监控才建好。第一次只记下现有文章作起点，之后只推新文章的条数和前 5 条链接，不带正文。
+
+**盯竞品时常见的组合：** 竞品的公众号和小红书账号推到同一个飞书群，各建一个监控、填同一个机器人地址就行。小红书那一半的做法和几种办法的对比：[每天监控竞品小红书账号，新笔记推送飞书](https://socialtoai.com/zh/how-to/watch-competitor-xiaohongshu-accounts/?utm_source=github&utm_medium=readme&utm_campaign=wechat-official-account-rss-feishu)。只要 RSS 地址、或想推企业微信群：[公众号文章转 RSS，或每天推到飞书、企业微信](https://socialtoai.com/zh/how-to/wechat-official-account-to-rss-feishu-wecom/?utm_source=github&utm_medium=readme&utm_campaign=wechat-official-account-rss-feishu)。
+
+**价格一句话：** 一个公众号每天看一次，每次 12 积分、一个月最多 372 积分（约 ¥8.9），失败不扣；免费账户可以建 1 个监控，购买过之后最多 20 个，支付宝或银行卡付款，$10 起得 3,000 积分，积分不过期。
+
 ## 两种跑法，先选一种
 
 | | A. 我们替你跑（推荐先试） | B. 你自己跑 |
@@ -109,10 +129,6 @@ Wrote feed.xml. Charged 12 credits.
 - **不是实时。** 按你设的时间读，最快一天一次。
 - **一页约 10 次推送。** 一次推送可能有多篇，我们真实读的那个账号一页是 63 篇。一天发超过一页的账号，只读第一页。
 - **拿不到的字段：** 阅读、点赞等数字不在文章列表里，要用 `wechat.article_stats`（12 积分）单独查。
-
-## 也可以直接问 AI
-
-把 `https://mcp.socialtoai.com/mcp` 接到 Claude、ChatGPT 或 Cursor，然后说：“每天早上看这个公众号有没有新文章，发到这个飞书群”。AI 会先预览、报价，你同意才建。步骤见 [MCP 接入页](https://socialtoai.com/zh/mcp/?utm_source=github&utm_medium=repo&utm_campaign=wechat-rss-feishu-20261106)。
 
 ## 测试
 
